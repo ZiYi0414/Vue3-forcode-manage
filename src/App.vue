@@ -1,30 +1,34 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div class="common-layout">
+    <el-container>
+      <el-header class="header">
+        <NavLink />
+      </el-header>
+      <el-main> <router-view /> </el-main>
+    </el-container>
+  </div>
 </template>
 
-<style lang="less">
+<script lang="ts">
+import { defineComponent } from 'vue'
+import NavLink from './components/NavLink.vue'
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    NavLink
+  }
+})
+</script>
+
+<style lang="less" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.header {
+  background: red;
 }
 </style>
