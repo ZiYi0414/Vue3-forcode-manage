@@ -8,6 +8,30 @@ export const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
+    path: '/user',
+    name: '用户管理',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/UserView.vue')
+  },
+  {
+    path: '/board',
+    name: '排行榜管理',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/BoardView.vue')
+  },
+  {
+    path: '/share',
+    name: '分享管理',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/ShareView.vue')
+  },
+  {
+    path: '/Comment',
+    name: '评论管理',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/CommentView.vue')
+  },
+  {
     path: '/about',
     name: '关于',
     // route level code-splitting

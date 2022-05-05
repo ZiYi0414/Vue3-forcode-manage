@@ -1,12 +1,12 @@
 <template>
-  <div class="home">Home</div>
+  <div class="home">Board</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'HomeView',
+  name: 'BoardView',
   components: {}
 })
 </script>
