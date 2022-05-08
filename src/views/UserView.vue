@@ -49,6 +49,7 @@
 import { defineComponent, ref } from 'vue'
 import type { TableColumnCtx } from 'element-plus/es/components/table/src/table-column/defaults'
 import type { ElTable } from 'element-plus'
+//import axios from '@/utils/axios'
 
 interface User {
   date: string
@@ -63,6 +64,7 @@ export default defineComponent({
   setup() {
     const tableRef = ref<InstanceType<typeof ElTable>>()
     const currentPage4 = ref(4)
+    const pageSize4 = ref(100)
 
     const tableData: User[] = [
       {
@@ -118,6 +120,7 @@ export default defineComponent({
       formatter,
       filterTag,
       // filterHandler,
+      pageSize4,
       tableData,
       currentPage4,
       handleSizeChange,

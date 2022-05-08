@@ -8,6 +8,12 @@ export const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
+    path: '/login',
+    name: '登录',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Login.vue')
+  },
+  {
     path: '/user',
     name: '用户管理',
     component: () =>

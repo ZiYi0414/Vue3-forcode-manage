@@ -11,6 +11,7 @@
       :key="route.name"
       :index="route.name"
       :route="route.path"
+      :disabled="route.name === '排行榜管理'"
     >
       {{ route.name }}
     </el-menu-item>
@@ -28,6 +29,7 @@ export default defineComponent({
     const activeIndex = ref(localStorage.getItem('routeKey') || '主页')
     const Router: Array<RouteRecordRaw> = routes
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleSelect = (key: string, keyPath: string[]) => {
       localStorage.setItem('routeKey', key)
     }

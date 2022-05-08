@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container>
       <el-header class="header">
-        <NavLink />
+        <NavLink v-if="showNav" />
       </el-header>
       <el-main> <router-view /> </el-main>
     </el-container>
@@ -10,13 +10,34 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import NavLink from './components/NavLink.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     NavLink
+  },
+  setup() {
+    const router = useRouter()
+    let showNav = ref(true)
+    watch(
+      () => router.currentRoute.value.path,
+      (toPath) => {
+        //要执行的方法
+        if (toPath == '/login') {
+          showNav.value = false
+        } else {
+          showNav.value = true
+        }
+      },
+      { immediate: true, deep: true }
+    )
+
+    return {
+      showNav
+    }
   }
 })
 </script>
