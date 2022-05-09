@@ -1,56 +1,25 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import navRouter from './navRouter'
+import otherRouter from './otherRouter'
 
-export const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: '主页',
-    component: HomeView
-  },
-  {
-    path: '/login',
-    name: '登录',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Login.vue')
-  },
-  {
-    path: '/user',
-    name: '用户管理',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/UserView.vue')
-  },
-  {
-    path: '/board',
-    name: '排行榜管理',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/BoardView.vue')
-  },
-  {
-    path: '/share',
-    name: '分享管理',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/ShareView.vue')
-  },
-  {
-    path: '/Comment',
-    name: '评论管理',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/CommentView.vue')
-  },
-  {
-    path: '/about',
-    name: '关于',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+export const routes: Array<RouteRecordRaw> = [...navRouter, ...otherRouter]
 
 export const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const isLogin = sessionStorage.getItem('login')
+  if (to.meta.requireAuth) {
+    if (isLogin) {
+      next()
+    } else {
+      next({ path: '/login' })
+    }
+  } else {
+    next()
+  }
 })
 
 //export default router

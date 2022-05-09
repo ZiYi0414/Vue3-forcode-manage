@@ -22,6 +22,10 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     let showNav = ref(true)
+
+    if (sessionStorage.getItem('login') !== 'true') {
+      router.push('/login')
+    }
     watch(
       () => router.currentRoute.value.path,
       (toPath) => {

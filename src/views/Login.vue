@@ -29,9 +29,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { reactive, ref } from 'vue'
-import { FormInstance } from 'element-plus'
+import { ElMessage, FormInstance } from 'element-plus'
 
 import axios from '../utils/axios'
+import { router } from '@/router'
 
 export default defineComponent({
   name: 'LoginView',
@@ -70,8 +71,13 @@ export default defineComponent({
             password: ruleForm.pass
           }
         })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((res) => {
-          console.log(res.data)
+          ElMessage.success('登陆成功欢迎归来～')
+          if (res.data.code === 200) {
+            sessionStorage.setItem('login', 'true')
+            router.push('/')
+          }
         })
         .catch((error) => {
           console.log(error)

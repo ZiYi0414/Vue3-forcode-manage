@@ -21,13 +21,13 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
-import { routes } from '../router/index'
+import navRouter from '../router/navRouter'
 
 export default defineComponent({
   name: 'NavLink',
   setup() {
     const activeIndex = ref(localStorage.getItem('routeKey') || '主页')
-    const Router: Array<RouteRecordRaw> = routes
+    const Router: Array<RouteRecordRaw> = navRouter
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleSelect = (key: string, keyPath: string[]) => {
