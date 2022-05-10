@@ -5,7 +5,7 @@
       label="编号"
       sortable
       width="120"
-      column-key="userId"
+      column-key="share.id"
     />
     <el-table-column prop="share.title" label="标题" width="180" />
     <el-table-column
@@ -25,11 +25,16 @@
     </el-table-column>
     <el-table-column fixed="right" label="操作" width="140">
       <template #default="scope">
-        <el-button type="text" size="small">查看</el-button>
+        <el-button
+          type="text"
+          size="small"
+          @click="() => handleShareDetailClick(scope.row.share)"
+          >查看</el-button
+        >
         <el-popconfirm
           confirm-button-text="确定"
           cancel-button-text="取消"
-          :confirm="() => handleLiftClick(scope.row.share.id)"
+          @confirm="() => handleLiftClick(scope.row.share.id)"
           icon-color="#626AEF"
           title="你确定要通过该分享吗?"
         >
@@ -40,7 +45,7 @@
         <el-popconfirm
           confirm-button-text="确定"
           cancel-button-text="取消"
-          :confirm="() => handleBanClick(scope.row.share.id)"
+          @confirm="() => handleBanClick(scope.row.share.id)"
           title="你确定要拒绝该分享吗?"
         >
           <template #reference>
@@ -67,10 +72,16 @@
     :handleDrawerClose="handleDrawerClose"
     :user="userData"
   />
+  <ShareDrawer
+    :isShareDrawerOpen="isShareDrawerOpen"
+    :handleDrawerClose="handleDrawerClose"
+    :share="shareData"
+  />
 </template>
 
 <script lang="ts">
 import UserDrawer from '@/components/UserDrawer.vue'
+import ShareDrawer from '@/components/ShareDrawer.vue'
 import { defineComponent, ref } from 'vue'
 import { ElMessage, ElTable } from 'element-plus'
 import axios from '@/utils/axios'
@@ -79,7 +90,8 @@ import { Share, user, share } from '@/type'
 export default defineComponent({
   name: 'ShareView',
   components: {
-    UserDrawer
+    UserDrawer,
+    ShareDrawer
   },
   setup() {
     const tableRef = ref<InstanceType<typeof ElTable>>()
@@ -89,6 +101,8 @@ export default defineComponent({
     const tableData = ref<Share[]>([])
     const isUserDrawerOpen = ref<boolean>(false)
     const userData = ref<user>()
+    const isShareDrawerOpen = ref<boolean>(false)
+    const shareData = ref<share>()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
     // const filterTag = (value: number, row: Share) => {
@@ -119,7 +133,7 @@ export default defineComponent({
 
     const shareExec = (event: number, shareId: number) => {
       axios
-        .post('user/exec', { event: event, shareId: shareId })
+        .post('share/exec', { event: event, shareId: shareId })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((res) => {
           const { code } = res.data
@@ -149,10 +163,13 @@ export default defineComponent({
 
     const handleDrawerClose = () => {
       isUserDrawerOpen.value = false
+      isShareDrawerOpen.value = false
     }
 
     const handleShareDetailClick = (row: share) => {
       console.log(row)
+      shareData.value = row
+      isShareDrawerOpen.value = true
     }
 
     const handleBanClick = (id: number) => {
@@ -178,8 +195,10 @@ export default defineComponent({
       handleUserDetailClick,
       handleShareDetailClick,
       isUserDrawerOpen,
+      isShareDrawerOpen,
       handleDrawerClose,
-      userData
+      userData,
+      shareData
     }
   }
 })
