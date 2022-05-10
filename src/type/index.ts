@@ -33,7 +33,18 @@ export type share = {
   isReviewed: number
   title: string
 }
+export type discuss = {
+  createTime: string
+  details: string
+  id: number
+  state: number
+}
 
+export interface Discuss {
+  discuss: discuss
+  share: share
+  user: user
+}
 export interface Share {
   share: share
   user: user
