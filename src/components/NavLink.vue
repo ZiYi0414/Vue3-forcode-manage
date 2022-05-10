@@ -8,8 +8,8 @@
     ><el-menu-item disabled>Nice Coder</el-menu-item>
     <el-menu-item
       v-for="route in Router"
-      :key="route.name"
-      :index="route.name"
+      :key="route.path"
+      :index="route.path"
       :route="route.path"
       :disabled="route.name === '排行榜管理'"
     >

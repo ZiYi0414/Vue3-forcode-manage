@@ -76,7 +76,11 @@ export default defineComponent({
           ElMessage.success('登陆成功欢迎归来～')
           if (res.data.code === 200) {
             sessionStorage.setItem('login', 'true')
-            router.push('/')
+            router.push(
+              localStorage.getItem('routeKey')
+                ? (localStorage.getItem('routeKey') as string)
+                : '/'
+            )
           }
         })
         .catch((error) => {
